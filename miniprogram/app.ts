@@ -5,10 +5,8 @@ App<IAppOption>({
   globalData: {
     token: "",
   },
-  
 
-  data: {
-  },
+  data: {},
 
   onLaunch() {
     console.log("app onLaunch");
@@ -24,7 +22,6 @@ App<IAppOption>({
     // 登录
     wx.login({
       success: (res) => {
-        wx.hideLoading()
         console.log("微信服务器登录成功");
 
         if (res.code) {
@@ -34,7 +31,7 @@ App<IAppOption>({
               code: res.code
             },
             success: (res) => {
-              console.log(res);
+              wx.hideLoading()
               if (res.statusCode !== 200) {
                 console.error(res);
                 wx.showToast({

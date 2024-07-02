@@ -135,7 +135,7 @@ Page({
       data: data,
       success: async (_res): Promise<void> => {
         await this.getNotes();
-        // this.toNoteDetail(newId);
+        this.toNoteDetail(newId);
       }
     });
   },

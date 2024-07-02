@@ -27,10 +27,7 @@
           <van-cell-group bindtap="handleEditNote" data-id="{{item.id}}">
             <van-cell title="{{item.title}}" label="{{item.displayUpdateTime}}" />
           </van-cell-group>
-
-          <view slot="right">
-            <view data-id="{{item.id}}" bindtap="handleDeleteNote">删除</view>
-          </view>
+          <view slot="right" class="van-swipe-cell__right" data-id="{{item.id}}" bindtap="handleDeleteNote">删除</view>
         </van-swipe-cell>
 
         <view class="divider" wx:if="{{idx < notes.length - 1}}"></view>
