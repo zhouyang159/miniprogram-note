@@ -1,0 +1,53 @@
+<view class="index-container" style="min-height:{{windowHeight}}px;" bindtap="closeAllSwipeCell">
+  <view class="userinfo">
+    <block wx:if="{{canIUseOpenData}}">
+      <view class="userinfo-avatar" bindtap="toLogs">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <open-data type="userNickName"></open-data>
+    </block>
+
+    <block wx:elif="{{!hasUserInfo}}">
+      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称1 </button>
+      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称2 </button>
+      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
+    </block>
+
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+
+  <view class="note-list">
+    <view class="header">备忘录</view>
+    <view class="list-container">
+      <view wx:for="{{notes}}" wx:for-index="idx" wx:key="index" class="note-item">
+        <van-swipe-cell right-width="{{ 65 }}" id="swipe-cell-{{item.id}}" bind:open="onSwipeCellOpen">
+          <van-cell-group bindtap="handleEditNote" data-id="{{item.id}}">
+            <van-cell title="{{item.title}}" label="{{item.displayUpdateTime}}" />
+          </van-cell-group>
+
+          <view slot="right">
+            <view data-id="{{item.id}}" bindtap="handleDeleteNote">删除</view>
+          </view>
+        </van-swipe-cell>
+
+        <view class="divider" wx:if="{{idx < notes.length - 1}}"></view>
+      </view>
+    </view>
+
+    <view wx:if="{{notes.length === 0}}" class="tip">点击加号添加第一个备忘</view>
+  </view>
+
+  <view class="add-button-container">
+    <van-button icon="plus" round type="info" bindtap="addNote"></van-button>
+  </view>
+
+  <van-toast id="van-toast" />
+
+  <view class="loading" wx:if="{{fetchingNotes}}">
+    <van-loading size="60px" color="#1989fa"></van-loading>
+  </view>
+
+</view>
