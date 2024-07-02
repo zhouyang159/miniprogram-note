@@ -22,7 +22,6 @@ Page({
   },
 
   onLoad() {
-    console.log("index 111");
     // @ts-ignore
     if (wx.getUserProfile) {
       this.setData({
@@ -41,7 +40,9 @@ Page({
   onShow() {
     console.log("index page show");
 
-    if (getApp().globalData.token === "") return;
+    if (getApp().globalData.token === "") {
+      return;
+    }
     this.getNotes();
   },
   onUnload() {
@@ -132,7 +133,7 @@ Page({
         'token': getApp().globalData.token,
       },
       data: data,
-      success: async (_res): void => {
+      success: async (_res): Promise<void> => {
         await this.getNotes();
         // this.toNoteDetail(newId);
       }
@@ -153,15 +154,21 @@ Page({
     });
   },
   getUserProfile() {
-    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+
     wx.getUserProfile({
       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
-        console.log(res)
+        console.log(res, 666)
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
         })
+      },
+      fail: (aa) => {
+        console.log(aa, 'aa');
+      },
+      complete: (bb) => {
+        console.log(bb, 'bb');
       }
     })
   },
@@ -218,6 +225,6 @@ Page({
     });
   },
   closeAllSwipeCell() {
-    this.selectComponent("#" + this.data.openSwipeCellId + "").close();
-  }
+    // this.selectComponent("#" + this.data.openSwipeCellId + "").close();
+  },
 })

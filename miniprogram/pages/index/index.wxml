@@ -41,7 +41,7 @@
   </view>
 
   <view class="add-button-container">
-    <van-button icon="plus" round type="info" bindtap="addNote"></van-button>
+    <van-button type="info" round bindtap="addNote">新增</van-button>
   </view>
 
   <van-toast id="van-toast" />
